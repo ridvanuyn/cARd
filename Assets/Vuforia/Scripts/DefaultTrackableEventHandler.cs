@@ -8,6 +8,7 @@ Confidential and Proprietary - Protected under copyright and other laws.
 
 using UnityEngine;
 using Vuforia;
+using CardInfo;
 
 /// <summary>
 /// A custom handler that implements the ITrackableEventHandler interface.
@@ -22,6 +23,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
+    protected KuveytApi kuveyt;
+    public CardInfo cardInfo;
 
     #endregion // PROTECTED_MEMBER_VARIABLES
 
@@ -100,6 +103,12 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             component.enabled = true;
 
 		Debug.Log("found it");
+
+		
+        CardInformation cardInfos = kuveyt.getCreditCardInformation("321432143123");
+        Debug.Log(cardInfos.Limit);	
+        cardInfo.changeCardInfo(cardInfos.Limit);
+
     }
 
 
