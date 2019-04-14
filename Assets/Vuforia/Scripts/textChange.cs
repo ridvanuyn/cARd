@@ -9,9 +9,9 @@ public class textChange : MonoBehaviour
 
 	void Start()
 	{
-		CardInformation card=cardInfo.getCreditCardInformation("4025916319964789");
+		CardInformation card=cardInfo.getCreditCardInformation("4025916319964780");
 		textMesh = GetComponent<TextMesh>();
-        textMesh.text=card.Limit+" TL \n"+card.PointAmount +" TL \n"+card.InstallmentCount +" TL";
+        textMesh.text=card.Limit+" TL \n"+card.PointAmount +" TL \n"+card.InstallmentCount;
        
 
 	}

@@ -11,8 +11,7 @@ public class textSaglamKart : MonoBehaviour
 	{
 		CardInformation card = cardInfo.getCreditCardInformation("4025916319964789");
 		textMesh = GetComponent<TextMesh>();
-		//textMesh.text = card.Limit + " TL \n" + card.PointAmount + " TL \n" + card.InstallmentCount + " TL";
-        textMesh.text = " fdsfdasfdsa TL \n TLfdsfadsfdsa \n fdsfdsaTL";
+		textMesh.text = card.Limit + " TL \n" + card.PointAmount + " TL \n" + card.InstallmentCount;
 
 
 	}
