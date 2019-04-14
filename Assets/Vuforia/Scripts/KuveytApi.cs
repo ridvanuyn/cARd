@@ -72,28 +72,59 @@ public class KuveytApi : MonoBehaviour
 
 	public CardInformation getCreditCardInformation(string cardNumber)
 	{
-		// carddetail servisi http403 donuyor...
-		//var result = getCreditCardInformationAsync(cardNumber).Result;
+        //var result = getCreditCardInformationAsync(cardNumber).Result;
 
-		return new CardInformation(100.0, 10.0, 5);
-	}
+        // TODO credit card
+        if (cardNumber.Equals("4025916319964789"))
+        {
+            return new CardInformation(100.0, 10.0, 5, 12, cardNumber);
+        }
+
+        return new CardInformation(394, 15, 1, 0, cardNumber);
+    }
+
+
+
+
+    public List<string> getCreditCardNumbers()
+    {
+        var cardNumbers = new List<string>();
+
+        cardNumbers.Add("4025916319964789");
+        cardNumbers.Add("4025916319964780");
+
+        return cardNumbers;
+    }
 }
 
 public class CardInformation : MonoBehaviour
 {
-	public double Limit { get; set; }
-	public double PointAmount { get; set; }
-	public int InstallmentCount { get; set; }
+    public double Limit { get; }
+    public double PointAmount { get; }
+    public int InstallmentCount { get; }
+    public int DueDateRemainingDay { get; }
+    public string CardNumber { get; }
 
-	public CardInformation(double limit, double pointAmount, int installmentCount)
-	{
-		this.Limit = limit;
-		this.PointAmount = pointAmount;
-		this.InstallmentCount = installmentCount;
-	}
 
-	public override string ToString()
-	{
-		return String.Concat(Limit, " ", PointAmount, " ", InstallmentCount);
-	}
+    public double Score { get; set; } = 0.0;
+
+    public CardInformation(double limit, double pointAmount, int installmentCount, int dueDateRemainingDay, string CardNumber)
+    {
+        this.Limit = limit;
+        this.PointAmount = pointAmount;
+        this.InstallmentCount = installmentCount;
+        this.DueDateRemainingDay = dueDateRemainingDay;
+        this.CardNumber = CardNumber;
+        this.CalculateScore();
+    }
+
+    private void CalculateScore()
+    {
+        this.Score = PointAmount * 90 + Limit / 100 + InstallmentCount * 25 + DueDateRemainingDay * 5;
+    }
+
+    public override string ToString()
+    {
+        return String.Concat(Limit, " ", PointAmount, " ", InstallmentCount, " ", DueDateRemainingDay);
+    }
 }

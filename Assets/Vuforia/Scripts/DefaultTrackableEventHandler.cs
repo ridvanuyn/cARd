@@ -10,6 +10,7 @@ using UnityEngine;
 using Vuforia;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 ///using mainSpace;
 //using CardInfo;
 
@@ -26,9 +27,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
-    protected KuveytApi kuveyt=new KuveytApi();
-	public static Dictionary <string, double> dictionary = new Dictionary<string, double>();
-
+    public static Dictionary<string, double> dictionary = new Dictionary<string, double>();
+    public string bestChoiceTrackable = "";
 
     #endregion // PROTECTED_MEMBER_VARIABLES
 
@@ -68,11 +68,11 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
-    if(!dictionary.ContainsKey(mTrackableBehaviour.TrackableName))
-    {
-      dictionary.Add(mTrackableBehaviour.TrackableName+"", 0);
+            if (!dictionary.ContainsKey(mTrackableBehaviour.TrackableName))
+            {
+                dictionary.Add(mTrackableBehaviour.TrackableName + "", 0);
                 Debug.Log("ekledim");
-    }
+            }
 
             OnTrackingFound();
         }
@@ -97,6 +97,29 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     protected virtual void OnTrackingFound()
     {
+        KuveytApi kuveyt = new KuveytApi();
+        List<string> cardNumbers = kuveyt.getCreditCardNumbers();
+        var map = new SortedDictionary<double, CardInformation>(new ReverseComparer<double>(Comparer<double>.Default));
+        cardNumbers.ForEach(cardNumber =>
+        {
+            CardInformation result = kuveyt.getCreditCardInformation(cardNumber);
+            map.Add(result.Score, result);
+        });
+
+
+        CardInformation bestChoice = map.Values.First();
+
+        var cardMap = new Dictionary<string, string>
+        {
+            { "altinKart", "4025916319964789" },
+            { "saglamKart", "4025916319964780" }
+        };
+
+        if (bestChoice.CardNumber.Equals(cardMap[mTrackableBehaviour.TrackableName]))
+        {
+            this.bestChoiceTrackable = mTrackableBehaviour.TrackableName;
+        }
+
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
@@ -107,27 +130,40 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Enable colliders:
         foreach (var component in colliderComponents)
 
-        component.enabled = true;
+            component.enabled = true;
 
         // Enable canvas':
         foreach (var component in canvasComponents)
             component.enabled = true;
-        
-		
-        if(mTrackableBehaviour.TrackableName=="altinKart"){
-          CardInformation card = kuveyt.getCreditCardInformation("4025916319964789");  
-            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
-        }else{
-           CardInformation card = kuveyt.getCreditCardInformation("4025916319964780");
-            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
-		}
 
-        Debug.Log("Bu arkadaşı listeye ekledim "+mTrackableBehaviour.TrackableName);
+
+        if (mTrackableBehaviour.TrackableName == "altinKart")
+        {
+            CardInformation card = kuveyt.getCreditCardInformation("4025916319964789");
+            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
+        }
+        else
+        {
+            CardInformation card = kuveyt.getCreditCardInformation("4025916319964780");
+            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
+        }
+
+        Debug.Log("Bu arkadaşı listeye ekledim " + mTrackableBehaviour.TrackableName);
         Debug.Log(dictionary[mTrackableBehaviour.TrackableName]);
-            
-	//    cardInfo.changeCardInfo(cardInfos.Limit);
 
-	}
+        Debug.Log("###########");
+        Debug.Log(mTrackableBehaviour.TrackableName);
+        Debug.Log(this.bestChoiceTrackable);
+        Debug.Log("###########");
+
+        if (mTrackableBehaviour.TrackableName.Equals(this.bestChoiceTrackable))
+        {
+            Debug.Log("ooo beeeest");
+        }
+
+        //    cardInfo.changeCardInfo(cardInfos.Limit);
+
+    }
 
 
     protected virtual void OnTrackingLost()
@@ -150,4 +186,19 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     }
 
     #endregion // PROTECTED_METHODS
+}
+
+class ReverseComparer<T> : IComparer<T>
+{
+    private readonly IComparer<T> original;
+
+    public ReverseComparer(IComparer<T> original)
+    {
+        this.original = original;
+    }
+
+    public int Compare(T left, T right)
+    {
+        return original.Compare(right, left);
+    }
 }
