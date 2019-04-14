@@ -352,8 +352,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 200 TL MOCK ODEME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a50973f0322934156b90127f9aa16de0, type: 2}
-  m_sharedMaterial: {fileID: 21916102930257748, guid: a50973f0322934156b90127f9aa16de0,
+  m_fontAsset: {fileID: 11400000, guid: 7af81946f18a144e4b14c30ca931ddbb, type: 2}
+  m_sharedMaterial: {fileID: 21649737258303218, guid: 7af81946f18a144e4b14c30ca931ddbb,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -673,8 +673,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Kart Bilgileri
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a50973f0322934156b90127f9aa16de0, type: 2}
-  m_sharedMaterial: {fileID: 21916102930257748, guid: a50973f0322934156b90127f9aa16de0,
+  m_fontAsset: {fileID: 11400000, guid: 7af81946f18a144e4b14c30ca931ddbb, type: 2}
+  m_sharedMaterial: {fileID: 21649737258303218, guid: 7af81946f18a144e4b14c30ca931ddbb,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -859,8 +859,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: CIKIS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a50973f0322934156b90127f9aa16de0, type: 2}
-  m_sharedMaterial: {fileID: 21916102930257748, guid: a50973f0322934156b90127f9aa16de0,
+  m_fontAsset: {fileID: 11400000, guid: 7af81946f18a144e4b14c30ca931ddbb, type: 2}
+  m_sharedMaterial: {fileID: 21649737258303218, guid: 7af81946f18a144e4b14c30ca931ddbb,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
