@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{27BE2E88-155C-C528-973A-78CEE301FE64}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TextMesh Pro/Scripts/CardInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MainMenu.cs">
     <Files>
       <File FileName="Assets/Vuforia/Scripts/DefaultInitializationErrorHandler.cs" Line="216" Column="24" />
       <File FileName="Assets/Vuforia/Scripts/DefaultModelRecoEventHandler.cs" Line="110" Column="26" />
@@ -9,7 +9,9 @@
       <File FileName="Assets/Scripts/NewBehaviourScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Vuforia/Scripts/DefaultTrackableEventHandler.cs" Line="159" Column="9" />
       <File FileName="Assets/Vuforia/Scripts/KuveytApi.cs" Line="92" Column="9" />
-      <File FileName="Assets/TextMesh Pro/Scripts/CardInfo.cs" Line="27" Column="32" />
+      <File FileName="Assets/TextMesh Pro/Scripts/CardInfo.cs" Line="28" Column="10" />
+      <File FileName="Assets/Scripts/MainMenuChangeScene.cs" Line="13" Column="1" />
+      <File FileName="Assets/MainMenu.cs" Line="4" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
