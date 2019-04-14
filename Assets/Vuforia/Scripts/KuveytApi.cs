@@ -7,10 +7,24 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class KuveytApi : MonoBehaviour
 {
-	private async Task<String> getTokenAsync()
+    public static KuveytApi api;
+    public static CardInformation BestChoice { get; set; }
+
+    public static KuveytApi GetInstance()
+    {
+        if(api == null)
+        {
+            api = new KuveytApi();
+        }
+
+        return api;
+    }
+
+    private async Task<String> getTokenAsync()
 	{
 		HttpClient client = new HttpClient();
 
@@ -32,9 +46,9 @@ public class KuveytApi : MonoBehaviour
 	}
 
 
-	public string getToken()
-	{
-		string content = this.getTokenAsync().Result;
+    public string getToken()
+    {
+		string content = getTokenAsync().Result;
 
 		Console.WriteLine(content);
 
@@ -45,8 +59,8 @@ public class KuveytApi : MonoBehaviour
 		return match.Success ? match.Groups[1].Value : null;
 	}
 
-	private async Task<String> getCreditCardInformationAsync(string cardNumber)
-	{
+    private async Task<String> getCreditCardInformationAsync(string cardNumber)
+    {
 		HttpClient client = new HttpClient();
 		client.DefaultRequestHeaders.Authorization =
 			new AuthenticationHeaderValue("Bearer", getToken());
@@ -84,14 +98,26 @@ public class KuveytApi : MonoBehaviour
     }
 
 
+    public void decideBestChoice(List<string> cardNumbers)
+    {
+        var map = new SortedDictionary<double, CardInformation>(new ReverseComparer<double>(Comparer<double>.Default));
+        cardNumbers.ForEach(cardNumber =>
+        {
+            CardInformation result = this.getCreditCardInformation(cardNumber);
+            map.Add(result.Score, result);
+        });
 
+
+        KuveytApi.BestChoice = map.Values.First();
+    }
 
     public List<string> getCreditCardNumbers()
     {
-        var cardNumbers = new List<string>();
-
-        cardNumbers.Add("4025916319964789");
-        cardNumbers.Add("4025916319964780");
+        var cardNumbers = new List<string>
+        {
+            "4025916319964789",
+            "4025916319964780"
+        };
 
         return cardNumbers;
     }
@@ -104,6 +130,7 @@ public class CardInformation : MonoBehaviour
     public int InstallmentCount { get; }
     public int DueDateRemainingDay { get; }
     public string CardNumber { get; }
+    public Boolean IsBestOption { get; } = false;
 
 
     public double Score { get; set; } = 0.0;
@@ -122,7 +149,7 @@ public class CardInformation : MonoBehaviour
     {
         this.Score = PointAmount * 90 + Limit / 100 + InstallmentCount * 25 + DueDateRemainingDay * 5;
     }
-
+    
     public override string ToString()
     {
         return String.Concat(Limit, " ", PointAmount, " ", InstallmentCount, " ", DueDateRemainingDay);

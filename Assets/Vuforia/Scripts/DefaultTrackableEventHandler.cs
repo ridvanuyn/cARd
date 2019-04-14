@@ -97,17 +97,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     protected virtual void OnTrackingFound()
     {
-        KuveytApi kuveyt = new KuveytApi();
-        List<string> cardNumbers = kuveyt.getCreditCardNumbers();
-        var map = new SortedDictionary<double, CardInformation>(new ReverseComparer<double>(Comparer<double>.Default));
-        cardNumbers.ForEach(cardNumber =>
-        {
-            CardInformation result = kuveyt.getCreditCardInformation(cardNumber);
-            map.Add(result.Score, result);
-        });
-
-
-        CardInformation bestChoice = map.Values.First();
+        KuveytApi api = KuveytApi.GetInstance();
+        List<string> cardNumbers = api.getCreditCardNumbers();
+        api.decideBestChoice(cardNumbers);
+        
 
         var cardMap = new Dictionary<string, string>
         {
@@ -115,7 +108,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             { "saglamKart", "4025916319964780" }
         };
 
-        if (bestChoice.CardNumber.Equals(cardMap[mTrackableBehaviour.TrackableName]))
+        if (KuveytApi.BestChoice.CardNumber.Equals(cardMap[mTrackableBehaviour.TrackableName]))
         {
             this.bestChoiceTrackable = mTrackableBehaviour.TrackableName;
         }
@@ -139,12 +132,12 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
         if (mTrackableBehaviour.TrackableName == "altinKart")
         {
-            CardInformation card = kuveyt.getCreditCardInformation("4025916319964789");
+            CardInformation card = api.getCreditCardInformation("4025916319964789");
             dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
         }
         else
         {
-            CardInformation card = kuveyt.getCreditCardInformation("4025916319964780");
+            CardInformation card = api.getCreditCardInformation("4025916319964780");
             dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
         }
 
@@ -154,6 +147,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         Debug.Log("###########");
         Debug.Log(mTrackableBehaviour.TrackableName);
         Debug.Log(this.bestChoiceTrackable);
+
         Debug.Log("###########");
 
         if (mTrackableBehaviour.TrackableName.Equals(this.bestChoiceTrackable))
