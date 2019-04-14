@@ -5,14 +5,14 @@ using UnityEngine;
 public class textChange : MonoBehaviour
 {
     TextMesh textMesh;
+    KuveytApi cardInfo=new KuveytApi();
 
 	void Start()
 	{
+		CardInformation card=cardInfo.getCreditCardInformation("4025916319964789");
 		textMesh = GetComponent<TextMesh>();
-		textMesh.text="3200 TL \n 1200TL \n 32.45 TL ";
-
-		// KuveytApi cardInfo = new KuveytApi();
-		// Debug.Log(cardInfo.getCreditCardInformation("4025916319964789"));
+        textMesh.text=card.Limit+" TL \n"+card.PointAmount +" TL \n"+card.InstallmentCount +" TL";
+       
 
 	}
 

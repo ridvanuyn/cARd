@@ -8,6 +8,8 @@ Confidential and Proprietary - Protected under copyright and other laws.
 
 using UnityEngine;
 using Vuforia;
+using System.Collections;
+using System.Collections.Generic;
 ///using mainSpace;
 //using CardInfo;
 
@@ -24,8 +26,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
-    protected KuveytApi kuveyt;
-//    public CardInfo cardInfo;
+    protected KuveytApi kuveyt=new KuveytApi();
+	public static Dictionary <string, double> dictionary = new Dictionary<string, double>();
+
 
     #endregion // PROTECTED_MEMBER_VARIABLES
 
@@ -64,6 +67,13 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+
+    if(!dictionary.ContainsKey(mTrackableBehaviour.TrackableName))
+    {
+      dictionary.Add(mTrackableBehaviour.TrackableName+"", 0);
+                Debug.Log("ekledim");
+    }
+
             OnTrackingFound();
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
@@ -94,23 +104,30 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Enable rendering:
         foreach (var component in rendererComponents)
             component.enabled = true;
-
         // Enable colliders:
         foreach (var component in colliderComponents)
-            component.enabled = true;
+
+        component.enabled = true;
 
         // Enable canvas':
         foreach (var component in canvasComponents)
             component.enabled = true;
-
-		Debug.Log("found it");
-
+        
 		
-        kuveyt.getCreditCardInformation("321432143123");
-        Debug.Log(kuveyt.getCreditCardInformation("321432143123"));	
-    //    cardInfo.changeCardInfo(cardInfos.Limit);
+        if(mTrackableBehaviour.TrackableName=="altinKart"){
+          CardInformation card = kuveyt.getCreditCardInformation("4025916319964789");  
+            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
+        }else{
+           CardInformation card = kuveyt.getCreditCardInformation("4025916319964780");
+            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
+		}
 
-    }
+        Debug.Log("Bu arkadaşı listeye ekledim "+mTrackableBehaviour.TrackableName);
+        Debug.Log(dictionary[mTrackableBehaviour.TrackableName]);
+            
+	//    cardInfo.changeCardInfo(cardInfos.Limit);
+
+	}
 
 
     protected virtual void OnTrackingLost()

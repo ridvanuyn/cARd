@@ -335,7 +335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 324406329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28fff33e62af8413a8554148a8ebc46a, type: 3}
+  m_Script: {fileID: 11500000, guid: 64a5e32b5bb534659987edaceba26097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!102 &324406332
@@ -443,6 +443,7 @@ GameObject:
   - component: {fileID: 588438459}
   - component: {fileID: 588438458}
   - component: {fileID: 588438457}
+  - component: {fileID: 588438462}
   m_Layer: 0
   m_Name: bankCard
   m_TagString: Untagged
@@ -556,6 +557,18 @@ MonoBehaviour:
   mImageTargetType: 0
   mWidth: 200
   mHeight: 125.27933
+--- !u!114 &588438462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588438455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fff33e62af8413a8554148a8ebc46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &711785723
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,11 +628,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Limit                 :
+  m_text: 'Kalan Limit       :
 
-    Harcama tutari :
+    Puan Tutari      :
 
-    Puan                :'
+    Maks. Taksit     :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -688,10 +701,10 @@ MonoBehaviour:
   m_margin: {x: 5.0457587, y: 0, z: -4.925976, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 62
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 37
-    wordCount: 4
+    spaceCount: 23
+    wordCount: 6
     linkCount: 0
     lineCount: 3
     pageCount: 1
@@ -1308,6 +1321,7 @@ GameObject:
   - component: {fileID: 1260235112}
   - component: {fileID: 1260235111}
   - component: {fileID: 1260235110}
+  - component: {fileID: 1260235115}
   m_Layer: 0
   m_Name: creditCard
   m_TagString: Untagged
@@ -1421,6 +1435,18 @@ MonoBehaviour:
   mImageTargetType: 0
   mWidth: 200
   mHeight: 124.24607
+--- !u!114 &1260235115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260235108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a5e32b5bb534659987edaceba26097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!21 &1407358170
 Material:
   serializedVersion: 6
@@ -1823,11 +1849,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Limit                 :
+  m_text: 'Kalan Limit       :
 
-    Harcama tutari :
+    Puan Tutari      :
 
-    Puan                :'
+    Maks. Taksit     :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1896,10 +1922,10 @@ MonoBehaviour:
   m_margin: {x: 5.0457587, y: 0, z: -4.925976, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 62
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 37
-    wordCount: 4
+    spaceCount: 23
+    wordCount: 6
     linkCount: 0
     lineCount: 3
     pageCount: 1
