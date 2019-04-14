@@ -26,8 +26,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected TrackableBehaviour mTrackableBehaviour;
     protected TrackableBehaviour.Status m_PreviousStatus;
     protected TrackableBehaviour.Status m_NewStatus;
-    protected KuveytApi kuveyt=new KuveytApi();
-	public static Dictionary <string, double> dictionary = new Dictionary<string, double>();
+    protected KuveytApi api = new KuveytApi();
+    public static Dictionary<string, double> dictionary = new Dictionary<string, double>();
+    private string bestChoiceTrackable = null;
 
 
     #endregion // PROTECTED_MEMBER_VARIABLES
@@ -68,11 +69,16 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
 
-    if(!dictionary.ContainsKey(mTrackableBehaviour.TrackableName))
-    {
-      dictionary.Add(mTrackableBehaviour.TrackableName+"", 0);
+            if (!dictionary.ContainsKey(mTrackableBehaviour.TrackableName))
+            {
+                dictionary.Add(mTrackableBehaviour.TrackableName + "", 0);
                 Debug.Log("ekledim");
-    }
+            }
+
+            if (mTrackableBehaviour.TrackableName.Equals(this.bestChoiceTrackable))
+            {
+                Debug.Log("ooo beeeest");
+            }
 
             OnTrackingFound();
         }
@@ -107,27 +113,34 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Enable colliders:
         foreach (var component in colliderComponents)
 
-        component.enabled = true;
+            component.enabled = true;
 
         // Enable canvas':
         foreach (var component in canvasComponents)
             component.enabled = true;
-        
-		
-        if(mTrackableBehaviour.TrackableName=="altinKart"){
-          CardInformation card = kuveyt.getCreditCardInformation("4025916319964789");  
-            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
-        }else{
-           CardInformation card = kuveyt.getCreditCardInformation("4025916319964780");
-            dictionary[mTrackableBehaviour.TrackableName] = card.Limit;
-		}
 
-        Debug.Log("Bu arkadaşı listeye ekledim "+mTrackableBehaviour.TrackableName);
-        Debug.Log(dictionary[mTrackableBehaviour.TrackableName]);
-            
-	//    cardInfo.changeCardInfo(cardInfos.Limit);
+        // banka
+        List<string> cardNumbers = api.getCreditCardNumbers();
 
-	}
+        var map = new SortedDictionary<double, CardInformation>(new ReverseComparer<double>(Comparer<double>.Default));
+        cardNumbers.ForEach(cardNumber =>
+        {
+            var result = api.getCreditCardInformation(cardNumber);
+            map.Add(result.Score, result);
+        });
+
+        CardInformation bestChoice = map.Values.First();
+
+
+        var cardMap = new Dictionary<string, string>();
+        cardMap.Add("altinKart", "4025916319964789");
+        cardMap.Add("saglamKart", "4025916319964780");
+
+        if (bestChoice.CardNumber.Equals(cardMap[mTrackableBehaviour.TrackableName]))
+        {
+            this.bestChoiceTrackable = mTrackableBehaviour.TrackableName;
+        }
+    }
 
 
     protected virtual void OnTrackingLost()
