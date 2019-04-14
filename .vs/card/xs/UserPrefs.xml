@@ -10,7 +10,7 @@
       <File FileName="Assets/Vuforia/Scripts/textChange.cs" Line="21" Column="9" />
       <File FileName="Assets/Scripts/NewBehaviourScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Vuforia/Scripts/KuveytApi.cs" Line="70" Column="3" />
-      <File FileName="Assets/Vuforia/Scripts/DefaultTrackableEventHandler.cs" Line="134" Column="13" />
+      <File FileName="Assets/Vuforia/Scripts/DefaultTrackableEventHandler.cs" Line="23" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
