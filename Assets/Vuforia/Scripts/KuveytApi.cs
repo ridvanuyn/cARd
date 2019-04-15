@@ -88,8 +88,8 @@ public class KuveytApi : MonoBehaviour
     {
         var cardNumbers = new List<string>();
 
-        cardNumbers.Add("4025916319964789");
-        cardNumbers.Add("4025916319964780");
+        cardNumbers.Add("1");
+        cardNumbers.Add("2");
 
         return cardNumbers;
     }
